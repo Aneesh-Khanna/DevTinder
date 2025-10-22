@@ -5,7 +5,7 @@ const User = require("./models/user"); // import user model
 
 app.use("/",express.json()); // middleware to get json data from req at all routes
 
-// API to insert data into database
+// API to insert data into database in signup form
 
 app.post("/signup", async (req,res)=>{
     // const userObj = {
@@ -34,8 +34,39 @@ app.post("/signup", async (req,res)=>{
     }
 })
 
+//Get user by email sent in req
+app.get("/user", async (req,res)=>{
+    const useremail = req.body.email; // fetch email from req object
+    
+    try{
+    //find() takes a filter, gives array of objects
+    const users = await User.find({email:useremail});
+    if(users.length === 0)
+    {
+        res.status(404).send("User not found");
+    }
+    else
+    {
+        //send data to user if found
+        res.send(users);
+    }
+    }
+    catch(err){
+        res.status(400).send("Something went wrong, couldn't send user data");
+    }
+})
+// Feed API - GET/feed - to get all users from the database
 
-
+app.get("/feed", async (req,res)=>{
+    try{
+        const users = await User.find({}); // {} empty filter returns all documents
+        res.send(users);
+    }
+    catch(err)
+    {   
+        res.status(400).send("Something went wrong, couldn't send user data");
+    }
+})
 
 
 
