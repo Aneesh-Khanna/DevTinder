@@ -3,17 +3,20 @@ const {connectDB} = require("./config/database"); // import db connection config
 const app = express(); // create web server
 const User = require("./models/user"); // import user model
 
+app.use("/",express.json()); // middleware to get json data from req at all routes
+
 // API to insert data into database
 
 app.post("/signup", async (req,res)=>{
-    const userObj = {
-        firstName : "Aneesh",
-        lastName : "Khanna",
-        email:"aneesh@gmail.com",
-        password:"aneesh123",
-        age: 20,
-        gender:"male"
-    }
+    // const userObj = {
+    //     firstName : "",
+    //     lastName : "",
+    //     email:"",
+    //     password:"",
+    //     age: 2,
+    //     gender:""
+    // }
+    const userObj = req.body;
 
     // create a new instance of userModel and pass data in it
 
