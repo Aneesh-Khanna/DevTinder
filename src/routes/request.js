@@ -71,4 +71,45 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth , async(req,res)=
     }
 })
 
+
+// Review Connection Request API (Accept or reject the person)
+requestRouter.post("/request/review/:status/:requestId", userAuth , async(req,res)=>{
+    try{
+        const loggedInUser = req.user;
+        const status = req.params.status;
+        const requestId = req.params.requestId;
+
+        //Validate status
+        const allowedStatus = ["accepted","rejected"];
+        if(!allowedStatus.includes(status)){
+            throw new Error("Status not allowed");
+        }
+
+        //Validate if requestId is present in DB
+        const connectionRequest = await ConnectionRequest.findOne({
+            _id: requestId,
+            toUserId: loggedInUser._id,
+            status:"interested"
+        })
+
+        if(!connectionRequest){
+            throw new Error("Connection request not found!!");
+        }
+
+        //Now the connection request is valid, now modify the status to accept or rejected
+
+        connectionRequest.status = status; // modify the status
+
+        const data = await connectionRequest.save(); // save the modified instance
+
+        res.json({
+            message : "Connection request " + status,
+            data
+        })
+    }
+    catch(err){
+        res.status(400).send("ERROR:"+err.message);
+    }
+})
+
 module.exports = requestRouter;

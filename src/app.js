@@ -5,6 +5,7 @@ const cookieParser  = require("cookie-parser");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
+const userRouter = require("./routes/user");
 
 app.use("/",express.json()); // middleware to get json data from req at all routes
 app.use(cookieParser()); // middle to read cookie from req at all routes
@@ -12,6 +13,7 @@ app.use(cookieParser()); // middle to read cookie from req at all routes
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
 
 // Db connection and making server listen
 connectDB().then(()=>{

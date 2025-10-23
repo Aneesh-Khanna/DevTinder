@@ -12,11 +12,11 @@
 
 ## connectionRequestRouter
 - POST /request/send/:status/:userId - Allows user to send request to other user(ignore or interest)
-- POST /request/review/:status/:requestId
+- POST /request/review/:status/:requestId  - Allows a user to accept/reject a request
 
 ## userRouter
-- GET /user/requests/received
-- GET /user/connections
+- GET /user/requests/received - fetches all pending incoming requests
+- GET /user/connections - fetches all the accepted connections of a user
 - GET /user/feed - Gets you the profiles of other users on platform
 
 
