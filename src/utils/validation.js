@@ -29,36 +29,36 @@ const validateSignUpData = (req) => {
     throw new Error("Please enter a strong password with uppercase, lowercase, number, and symbol.");
   }
 
-  // Age (optional)
-  if (age !== undefined && (typeof age !== "number" || age < 18)) {
-    throw new Error("Age must be a number and at least 18.");
-  }
+  // // Age (optional)
+  // if (age !== undefined && (typeof age !== "number" || age < 18)) {
+  //   throw new Error("Age must be a number and at least 18.");
+  // }
 
-  // Gender (optional)
-  if (gender !== undefined && !["male", "female", "others"].includes(gender.toLowerCase())) {
-    throw new Error("Gender must be 'male', 'female', or 'others'.");
-  }
+  // // Gender (optional)
+  // if (gender !== undefined && !["male", "female", "others"].includes(gender.toLowerCase())) {
+  //   throw new Error("Gender must be 'male', 'female', or 'others'.");
+  // }
 
-  // Photo URL (optional)
-  if (photoUrl !== undefined && !validator.isURL(photoUrl)) {
-    throw new Error("Photo URL is invalid.");
-  }
+  // // Photo URL (optional)
+  // if (photoUrl !== undefined && !validator.isURL(photoUrl)) {
+  //   throw new Error("Photo URL is invalid.");
+  // }
 
-  // About (optional)
-  if (about !== undefined && (typeof about !== "string" || about.length > 300)) {
-    throw new Error("About section must be a string with maximum 300 characters.");
-  }
+  // // About (optional)
+  // if (about !== undefined && (typeof about !== "string" || about.length > 300)) {
+  //   throw new Error("About section must be a string with maximum 300 characters.");
+  // }
 };
 
 const validateEditProfileData = (req) => {
   const allowedEditFields = [
     "firstName",
     "lastName",
-    "email",
     "photoUrl",
     "gender",
     "age",
     "about",
+    "skills",
   ];
 
   const isEditAllowed = Object.keys(req.body).every((field) =>
@@ -66,6 +66,8 @@ const validateEditProfileData = (req) => {
   );
 
   return isEditAllowed;
+
+  //check if operation is allowed 
 };
 
 module.exports = {
