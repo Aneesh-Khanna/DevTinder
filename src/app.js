@@ -9,10 +9,21 @@ const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const cors = require("cors"); // to handle cors error
 
+const allowedOrigins = [
+  "http://localhost:5173", // Vite dev
+  "https://dev-tinder-kappa-seven.vercel.app", // Vercel frontend
+];
+
 app.use(
   cors({
-    origin: "https://dev-tinder-kappa-seven.vercel.app",
-    credentials: true,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow Postman, etc
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error("CORS not allowed"), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, // important for cookies
   })
 ); // to avoid cors error
 app.use("/", express.json()); // middleware to get json data from req at all routes

@@ -41,7 +41,10 @@ authRouter.post("/signup", async (req, res) => {
 
     //Add JWT token to cookie
     res.cookie("token", token, {
-      expires: new Date(Date.now() + 8 * 360000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // HTTPS required in prod
+      sameSite: "none", // allow cross-origin cookies
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     }); // token field : actual token
 
     res.send(savedUser); // send user details
@@ -76,7 +79,10 @@ authRouter.post("/login", async (req, res) => {
 
       //Add JWT token to cookie
       res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 360000),
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // HTTPS required in prod
+        sameSite: "none", // allow cross-origin cookies
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       }); // token field : actual token
 
       // send response
