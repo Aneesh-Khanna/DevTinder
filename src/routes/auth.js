@@ -31,9 +31,13 @@ authRouter.post("/signup", async (req, res) => {
 
     // Create JWT TOKEN
 
-    const token = await jwt.sign({ _id: savedUser._id }, "DEV@TINDER$2005", {
-      expiresIn: "7d",
-    });
+    const token = await jwt.sign(
+      { _id: savedUser._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     //Add JWT token to cookie
     res.cookie("token", token, {
@@ -66,7 +70,7 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       // Create JWT TOKEN
 
-      const token = await jwt.sign({ _id: user._id }, "DEV@TINDER$2005", {
+      const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
 

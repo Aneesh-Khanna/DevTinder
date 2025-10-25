@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express"); // import express
 const { connectDB } = require("./config/database"); // import db connection config
 const app = express(); // create web server
@@ -10,7 +11,7 @@ const cors = require("cors"); // to handle cors error
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://dev-tinder-kappa-seven.vercel.app",
     credentials: true,
   })
 ); // to avoid cors error
@@ -29,7 +30,7 @@ connectDB()
 
     // if db connected then only start the server
 
-    app.listen(3001, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Server is successfully listening on port 3001....");
     }); // making server listen to requests
   })

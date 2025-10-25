@@ -13,7 +13,7 @@ const userAuth = async (req, res, next) => {
     }
     //Validate cookie
 
-    const decodedMessage = await jwt.verify(token, "DEV@TINDER$2005");
+    const decodedMessage = await jwt.verify(token, process.env.JWT_SECRET);
     const { _id } = decodedMessage;
 
     // fetch profile of given id of user
