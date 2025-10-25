@@ -1,15 +1,26 @@
 const validator = require("validator");
 
 const validateSignUpData = (req) => {
-  const { firstName, lastName, email, password, age, gender, photoUrl, about } = req.body;
+  const { firstName, lastName, email, password, age, gender, photoUrl, about } =
+    req.body;
 
   // First Name
-  if (!firstName || typeof firstName !== "string" || firstName.trim().length < 2 || firstName.trim().length > 20) {
+  if (
+    !firstName ||
+    typeof firstName !== "string" ||
+    firstName.trim().length < 2 ||
+    firstName.trim().length > 20
+  ) {
     throw new Error("First name must be a string between 2 and 20 characters.");
   }
 
   // Last Name
-  if (!lastName || typeof lastName !== "string" || lastName.trim().length < 2 || lastName.trim().length > 20) {
+  if (
+    !lastName ||
+    typeof lastName !== "string" ||
+    lastName.trim().length < 2 ||
+    lastName.trim().length > 20
+  ) {
     throw new Error("Last name must be a string between 2 and 20 characters.");
   }
 
@@ -19,14 +30,19 @@ const validateSignUpData = (req) => {
   }
 
   // Password
-  if (!password || !validator.isStrongPassword(password, {
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1,
-    minNumbers: 1,
-    minSymbols: 1,
-  })) {
-    throw new Error("Please enter a strong password with uppercase, lowercase, number, and symbol.");
+  if (
+    !password ||
+    !validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+  ) {
+    throw new Error(
+      "Please enter a strong password with uppercase, lowercase, number, and symbol."
+    );
   }
 
   // // Age (optional)
@@ -67,7 +83,7 @@ const validateEditProfileData = (req) => {
 
   return isEditAllowed;
 
-  //check if operation is allowed 
+  //check if operation is allowed
 };
 
 module.exports = {
