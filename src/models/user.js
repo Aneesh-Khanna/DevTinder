@@ -68,6 +68,18 @@ const userSchema = new mongoose.Schema(
     skills: {
       type: [String], // array of strings
     },
+    isVerified: {
+      type: Boolean,
+      default: false, // user is not verified initially
+    },
+
+    otp: {
+      type: String, // store 6-digit OTP temporarily
+    },
+
+    otpExpiresAt: {
+      type: Date, // OTP expiration timestamp
+    },
   },
   { timestamps: true }
   // it will create createdAt and updatedAt fields automatically.
