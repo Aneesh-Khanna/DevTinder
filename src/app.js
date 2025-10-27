@@ -8,6 +8,9 @@ const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const cors = require("cors"); // to handle cors error
+const http = require("http");
+const initializeSocket = require("./utils/socket");
+const chatRouter = require("./routes/chat");
 
 const allowedOrigins = [
   "http://localhost:5173", // Vite dev
@@ -33,6 +36,10 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", chatRouter);
+
+const server = http.createServer(app);
+initializeSocket(server);
 
 // Db connection and making server listen
 connectDB()
@@ -41,7 +48,7 @@ connectDB()
 
     // if db connected then only start the server
 
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log("Server is successfully listening on port 3001....");
     }); // making server listen to requests
   })
