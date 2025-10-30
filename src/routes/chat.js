@@ -27,7 +27,14 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
       await chat.save();
     }
 
-    res.json(chat);
+    //  Add createdAt timestamp when sending response
+    const formattedMessages = chat.messages.map((msg) => ({
+      senderId: msg.senderId,
+      text: msg.text,
+      createdAt: msg.createdAt, // <-- ✅ this line adds timestamp
+    }));
+
+    res.json({ messages: formattedMessages });
   } catch (err) {
     res.status(400).send("ERROR:" + err.message);
   }
