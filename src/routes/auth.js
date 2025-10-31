@@ -145,8 +145,11 @@ authRouter.post("/login", async (req, res) => {
 //Logout API
 authRouter.post("/logout", async (req, res) => {
   try {
-    res.cookie("token", null, {
-      expires: new Date(Date.now()),
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/", // IMPORTANT — must match how it was originally set
     });
     res.send("Successfully logged out.");
   } catch (err) {
